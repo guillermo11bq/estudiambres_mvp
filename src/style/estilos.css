@@ -1,0 +1,237 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+.inputForgot{
+    background: #757575;
+}
+
+  .flexslider{
+      width: 100%;
+      position: relative;
+  }
+  
+  .slides{
+      overflow: hidden;
+  }
+  
+  .slides img{
+      width: 100%;
+  }
+  
+  .slides,
+  .flex-control-nav,
+  .flex-direction-nav {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .flex-control-nav{
+      width: 100%;
+      text-align: center;
+      position: absolute;
+      bottom: 5%;
+      z-index: 999;
+  }
+  
+  .flex-control-nav li{
+      display: inline-block;
+      margin: 0 6px;
+  }
+  
+  .flex-control-nav li a{
+      display: block;
+      background: #777777;
+      width: 12px;
+      height: 12px;
+      border-radius: 12px;
+      text-indent: -9999px;
+  }
+  
+  .flex-control-nav li a:hover{
+      background: red;
+  }
+  
+  .flex-control-nav li a.flex-active{
+      background: red;	
+  }
+  
+  .flex-direction-nav a{
+      display: block;
+      text-decoration: none;
+      position: absolute;
+      top: 50%;
+      z-index: 999;
+      width: 40px;
+      height: 40px;
+      overflow: hidden;
+      opacity: 0;
+      -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    -ms-transition: all 0.3s ease-in-out;
+    -o-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .flex-direction-nav .flex-prev{
+      left: 0;
+  }
+  
+  .flex-direction-nav .flex-next{
+      right: 0;
+  }
+  
+  .flex-direction-nav a:before {
+    font-size: 40px;
+    display: inline-block;
+    content: '\f001';
+    color: #fff;
+    text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  .flex-direction-nav a.flex-next:before {
+    content: '\f002';
+  }
+  
+  .flex-caption p{
+      position: absolute;
+      top: 50%;
+      text-align: center;
+      width: 100%;
+      font-size: 45px;
+      color: #fff;
+      font-weight: bold;
+  }
+  
+  .flexslider:hover .flex-direction-nav .flex-prev{
+      opacity: 0.7;
+      left: 10px;
+  }
+  
+  .flexslider:hover .flex-direction-nav .flex-prev:hover{
+      opacity: 1;
+  }
+  
+  .flexslider:hover .flex-direction-nav .flex-next{
+      opacity: 0.7;
+      right: 10px;
+  }
+  
+  .flexslider:hover .flex-direction-nav .flex-next:hover{
+      opacity: 1;
+  }
+
+  .contenedor-form {
+    background-color: #fff;
+    max-width: 500px;
+    width: 100%;
+    margin: 48px auto;
+    border-radius: 5px;
+    position: relative;
+    z-index: 0;
+    /*padding: 40px;*/
+}
+
+.contenedor-form .toggle {
+    position: absolute;
+    top: 7px;
+    right: 7px;
+    width: 100px;
+    height: 30px;
+    font-size: 12px;
+    line-height: 25px;
+    text-align: center;
+    cursor: pointer;
+    transition: all .5s ease;
+}
+
+.contenedor-form .toggle:hover {
+    border: 2px solid #FFC110;
+    border-radius: 4px;
+}
+
+.contenedor-form .toggle span {
+    letter-spacing: 1px;
+}
+
+.contenedor-form h2 {
+    margin: 0 0 28px 0;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1;
+}
+.contenedor-form input[type="text"],
+.contenedor-form input[type="password"],
+.contenedor-form input[type="email"],
+.contenedor-form input[type="number"],
+.contenedor-form input[type="file"]{
+    outline: none;
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    margin: 0 0 20px 0;
+    border: none;
+    border-radius: 2px;
+    border-bottom: 4px solid #ff851b;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-weight:normal;
+    transition: all .5s ease;
+}
+
+.contenedor-form input[type="text"]:focus,
+.contenedor-form input[type="password"]:focus,
+.contenedor-form input[type="email"]:focus,
+.contenedor-form input[type="number"]:focus,
+.contenedor-form input[type="file"]:focus{
+    border-bottom: 4px solid #FFC110;
+}
+
+.contenedor-form input[type="submit"] {
+    background: #FF851B;
+    color: #FFF;
+    width: 100%;
+    border: none;
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: normal;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all .5s ease;
+}
+
+.contenedor-form input[type="submit"]:hover {
+    background: #FFC110;
+}
+
+.contenedor-form .reset-password {
+    width: 100%;
+    padding: 15px 0;
+    text-align: center;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.contenedor-form .reset-password a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.contenedor-form .formulario {
+    display: none;
+    padding: 40px;
+}
+
+.contenedor-form .formulario:nth-child(2) {
+    display: block;
+}
+
+@media only screen and (max-width: 550px) {
+    .contenedor-form {
+        width: 90%;
+    }
+}
