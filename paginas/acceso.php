@@ -103,7 +103,9 @@ if ( !empty($_POST['pass']) && !empty($_POST['nombre']) && !empty($_POST['patern
 				<input type="text" name="materno" placeholder="Apellido Materno" required>
 				<input type="text" name="alias" placeholder="Alias" required>	
 				<input type="password" name="pass" placeholder="Contraseña" required>	
-				<input type="text" name="tel" placeholder="Teléfono" required>
+				<input type="number" min="1000000000" max="9999999999" name="tel" placeholder="Teléfono a 10 digitos" required>
+				<br>
+                <br>
 						
 				<input type="submit" value="Registrarse">
 			</form>

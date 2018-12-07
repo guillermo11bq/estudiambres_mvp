@@ -12,19 +12,26 @@
 
 <?foreach ($verunproducto as $producto):?>
 <div class="carddetalle">
-  <img src="images/<?=$producto['fotoPro'] ?>" class="imgunica">
-  <h1><?php echo $producto['nombrePro'];?></h1>
-  <p class="title">$20<p>
-  <p>    <?php echo $producto['descripcion'];?></p>
-  <div style="margin: 24px 0;">
-    <a class="aProducto" href="#"><i class="fab fa-whatsapp"></i></a> 
-    <a  class="aProducto" href="#"><i class="fab fa-facebook-messenger"></i></a>
-    <a  class="aProducto" href="#"><i class="far fa-comment-alt"></i></a> 
+    <div class="productImage" style="background-image: url('images/<?=$producto['fotoPro'] ?>')"></div>
+  <!--<img src="images/<?=$producto['fotoPro'] ?>" class="imgunica">-->
+  <div class="detallesCard">
+      <h1><?php echo $producto['nombrePro'];?></h1>
+    <p class="gray grey">$<?=$producto['precio']?><p><br>
+    <p> Descripción: <?php echo $producto['descripcion'];?></p>
+  <div class="botonesContacto">
+    <a class="aProducto" href="https://api.whatsapp.com/send?phone=521<?=$producto['celular']?>&text=Hola me interesa comprar un producto">
+        <i class="fab fa-whatsapp fa-2x"></i>
+        </a> 
+    <!--<a  class="aProducto" href="#"><i class="fab fa-facebook-messenger"></i></a>-->
+    <a  class="aProducto" href="sms:521<?=$producto['celular']?>"><i class="far fa-comment-alt fa-2x"></i></a> 
  </div>
- <div>
-     "<?php echo $producto['alias'];?>" <br>
+ <hr>
+ <h2>Detalles del vendedor</h2><br>
      <?php echo $producto['username'];?> <br>
-     <?php echo $producto['celular'];?>
- </div>
+     tambien conocido como "<?php echo $producto['alias'];?>" <br>
+     Contacto: <?php echo $producto['celular'];?>
+ 
+  </div>
+  
 </div>
 <?endforeach;?>

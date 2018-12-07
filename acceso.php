@@ -59,6 +59,8 @@ if ( !empty($_POST['pass']) && !empty($_POST['nombre']) && !empty($_POST['patern
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="shortcut icon" href="src/img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="src/img/favicon.ico" type="image/x-icon">
 	<link rel="stylesheet" href="src/style/estilos.css">
 	<link rel="stylesheet" href="src/style/style.css">
 	<title>Acceso</title>
@@ -128,13 +130,13 @@ if ( !empty($_POST['pass']) && !empty($_POST['nombre']) && !empty($_POST['patern
 				<input type="text" name="materno" placeholder="Apellido Materno" required>
 				<input type="text" name="alias" placeholder="Alias" required>	
 				<input type="password" name="pass" placeholder="Contraseña" required>	
-				<input type="text" name="tel" placeholder="Teléfono" required>
+				<input type="number" min="1000000000" max="9999999999" name="tel" placeholder="Teléfono a 10 digitos" required>
 						
 				<input type="submit" value="Registrarse">
 			</form>
 		</div>
 		<div class="reset-password inputForgot">
-			<a href="#">Olvide mi Contraseña?</a>
+			<a href="#">¡Bienvenido!</a>
 		</div>
 	</div>
 	<script src="src/js/jquery-3.1.1.min.js"></script>    

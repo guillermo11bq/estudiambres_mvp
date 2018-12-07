@@ -1,33 +1,68 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
-	<meta http-equiv="X-UA-Compatible" content="ie=edge">
-	<link rel="stylesheet" href="src/style/estilos.css">
-	<link rel="stylesheet" href="src/style/style.css">
-	<title>Acceso</title>
-	<style>
-	html {
-		font-family: sans-serif;
-	}
+<?php
 
-	body {
-		margin: 0;
-		font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-		font-size: 1rem;
-		font-weight: 400;
+if(isset($_POST["submit"])) {
+    $db_name = "upmhworl_estudihambres";
 
-		background: #fff;
-		background-repeat: repeat-x;
-		background-size: auto 100vh;
-	}
-    </style>
-</head>
+    $nombre=$_POST['nombre'];
+    $precio=$_POST['precio'];
+    $descripcion=$_POST['descripcion'];
+    $cantidad=$_POST['cantidad'];
+
+    $currentDir = getcwd();
+    $uploadDirectory = "/images/";
+    $errors = []; // Store all foreseen and unforseen errors here
+    $fileExtensions = ['jpeg','jpg','png','gif']; // Get all the file extensions
+    $fileName = $_FILES['myfile']['name'];
+    $fileSize = $_FILES['myfile']['size'];
+    $fileTmpName  = $_FILES['myfile']['tmp_name'];
+    $fileType = $_FILES['myfile']['type'];
+    $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+    $uploadPath = $currentDir . $uploadDirectory . basename($fileName); 
+    //echo $uploadPath;
+        if (! in_array($fileExtension,$fileExtensions)) {
+            $errors[] = "Este tipo de archivo no lo soprtamos. Solo JPG, JPEG, PNG y GIF";
+        }
+      
+        if ($fileSize > 50000000) {
+            $errors[] = "Este archivo supera los 20MB. Prueba con uno mas ligero";
+        }
+        if (empty($errors)) {
+            $didUpload = move_uploaded_file($fileTmpName, $uploadPath);
+            if ($didUpload) {
+                //echo "El archivo " . basename($fileName) . " se ha subido";
+                $idUsuario = $_SESSION["USER"]['ID'];
+            
+                $result = mysqli_connect("localhost","upmhworl", "Fcheck2019") or die("Connection error: ". mysqli_error());
+            
+    		    mysqli_select_db($result, $db_name) or die("Could not Connect to Database: ". mysqli_error($result));
+    				
+			    mysqli_query($result,"INSERT INTO Producto(nombre, descripcion, precio, idUsuario, activo, foto)
+    		    	VALUES('$nombre','$descripcion',$precio,$idUsuario,1,'$fileName')") or die ("no se pudo insertar la imagen". mysqli_error($result));
+    				
+    		    mysqli_query($result,"INSERT INTO Movimiento(Cantidad, Momento, idProducto, IsDesechado)
+				    VALUES($cantidad, now(), LAST_INSERT_ID(), 0)") or die ("movimiento no registrado". mysqli_error($result));
+				    
+				header('Location: index.php?op=venderPrincipal', true, 303);
+                die();
+            } else {
+                echo "<script>alert('Ocurrio un error. Lo sentimos.');</script>";
+            }
+        } else {
+            echo "<script>alert('Hubo errores\\n";
+            foreach ($errors as $error) {
+                echo $error . "\\n";
+            }
+            echo "');</script>";
+        }
+}
+?>
+<link rel="stylesheet" property="stylesheet" href="src/style/estilos.css">
+	
 <div class="contenedor-form borderGray">
-    <h1 align="center">Agregar nuevos productos</h1>
-    
-    <div class=form>
+    <h1 align="center" style="margin-top: 40px">Agregar nuevos productos</h1>
+    <!--<h2 align="center">Disculpa, estamos haciendo reparaciones, intenta de nuevo en 30 minutos</h2>-->
+    Ya funciona!!
+    <div class="formulario">
         <form enctype="multipart/form-data" method="POST">
         <label>Nombre</label>
         <input type="text" placeholder="Asigna el nombre del producto" name="nombre">
@@ -42,79 +77,9 @@
         <input type="number" placeholder="Cantidad" name="cantidad">
         <br>
         <label>Foto</label>
-        <input type="file" accept="image/*;capture=camera" name="myimage" id="fileToUpload">
+        <input type="file" accept="image/*;capture=camera" name="myfile" id="myfile">
         <br>
         <input type="submit" name="submit" value="Registrar producto">
     </form>
     </div>
-    
-    
-
-<?php
-
-$db_name = "upmhworl_estudihambres";
-
-$nombre=$_POST['nombre'];
-$precio=$_POST['precio'];
-$descripcion=$_POST['descripcion'];
-$cantidad=$_POST['cantidad'];
-$imagename=$_FILES["myimage"]["name"]; 
-
-//Get the content of the image and then add slashes to it 
-$imagetmp = addslashes(file_get_contents($_FILES['myimage']['tmp_name']));
-
-//Insert the image name and image content in image_table
-$target_dir = "images/";
-$target_file = $target_dir . basename($_FILES["myimage"]["name"]);
-$uploadOk = 1;
-$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-// Check if image file is a actual image or fake image
-
-
-if(isset($_POST["submit"])) {
-    $check = getimagesize($_FILES["myimage"]["tmp_name"]);
-    if($check !== false) {
-        echo "File is an image - " . $check["mime"] . ".";
-        $uploadOk = 1;
-    } else {
-        echo "File is not an image.";
-        $uploadOk = 0;
-    }
-    
-        // Check if file already exists
-    if (file_exists($target_file)) {
-        echo "Sorry, file already exists.";
-        $uploadOk = 0;
-    }
-    
-        // Check file size
-    if ($_FILES["myimage"]["size"] > 500000) {
-        echo "Sorry, your file is too large.";
-        $uploadOk = 0;
-    }
-        
-        // Check if $uploadOk is set to 0 by an error
-    if ($uploadOk == 0) {
-        echo "Sorry, your file was not uploaded.";
-        // if everything is ok, try to upload file
-        } else {
-        if (move_uploaded_file($_FILES["myimage"]["tmp_name"], $target_file)) {
-            echo "The file ". basename( $_FILES["myimage"]["name"]). "<script>alert('Lo lamento hubo un error al subir tu imagen')</script>";
-            $idUsuario = $_SESSION["USER"]['ID'];
-            
-                    $result = mysqli_connect("localhost","upmhworl", "Fcheck2018") or die("Connection error: ". mysqli_error());
-            
-    				mysqli_select_db($result, $db_name) or die("Could not Connect to Database: ". mysqli_error($result));
-    				
-    				mysqli_query($result,"INSERT INTO Producto(nombre, descripcion, precio, idUsuario, activo, foto)
-    				VALUES('$nombre','$descripcion',$precio,$idUsuario,1,'$imagename')") or die ("image not inserted". mysqli_error($result));
-    				
-    				mysqli_query($result,"INSERT INTO Movimiento(Cantidad, Momento, idProducto, IsDesechado)
-    				VALUES($cantidad, now(), LAST_INSERT_ID(), 0)") or die ("movimiento no registrado". mysqli_error($result));
-        } else {
-            echo "<script>alert('Lo lamento hubo un error al subir tu imagen')</script>";
-        }
-    }
-}
-?>
 </div>
