@@ -1,17 +1,33 @@
+-- phpMyAdmin SQL Dump
+-- version 4.8.3
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost:3306
+-- Generation Time: Dec 09, 2018 at 11:55 PM
+-- Server version: 5.6.39-cll-lve
+-- PHP Version: 7.2.7
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
 /*!40101 SET NAMES utf8mb4 */;
 
-CREATE DATABASE IF NOT EXISTS upmhworl_estudihambres DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE upmhworl_estudihambres;
+--
+-- Database: `upmhworl_estudihambres`
+--
+CREATE DATABASE IF NOT EXISTS `upmhworl_estudihambres` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `upmhworl_estudihambres`;
 
 DELIMITER $$
+--
+-- Procedures
+--
 CREATE DEFINER=`upmhworl`@`localhost` PROCEDURE `borrarProducto` (IN `productoID` INT)  BEGIN
 
 UPDATE Producto
@@ -103,193 +119,362 @@ END$$
 
 DELIMITER ;
 
-CREATE TABLE Aula (
-  idAula int(11) NOT NULL,
-  Numero varchar(45) NOT NULL,
-  idEdificio int(11) NOT NULL
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Aula`
+--
+
+CREATE TABLE `Aula` (
+  `idAula` int(11) NOT NULL,
+  `Numero` varchar(45) NOT NULL,
+  `idEdificio` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE Campus (
-  idCampus int(11) NOT NULL,
-  Nombre varchar(90) NOT NULL,
-  Estado varchar(45) DEFAULT NULL,
-  Municipio varchar(90) DEFAULT NULL,
-  Coordenadas varchar(255) DEFAULT NULL,
-  idOrganizacion int(11) NOT NULL
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Campus`
+--
+
+CREATE TABLE `Campus` (
+  `idCampus` int(11) NOT NULL,
+  `Nombre` varchar(90) NOT NULL,
+  `Estado` varchar(45) DEFAULT NULL,
+  `Municipio` varchar(90) DEFAULT NULL,
+  `Coordenadas` varchar(255) DEFAULT NULL,
+  `idOrganizacion` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO Campus (idCampus, Nombre, Estado, Municipio, Coordenadas, idOrganizacion) VALUES
+--
+-- Dumping data for table `Campus`
+--
+
+INSERT INTO `Campus` (`idCampus`, `Nombre`, `Estado`, `Municipio`, `Coordenadas`, `idOrganizacion`) VALUES
 (1, 'UPMH', 'Hidalgo', 'Tolcayuca', '-2,-5', 1);
 
-CREATE TABLE Edificio (
-  idEdificio int(11) NOT NULL,
-  Nombre varchar(45) DEFAULT NULL,
-  idCampus int(11) NOT NULL
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Edificio`
+--
+
+CREATE TABLE `Edificio` (
+  `idEdificio` int(11) NOT NULL,
+  `Nombre` varchar(45) DEFAULT NULL,
+  `idCampus` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE Etiqueta (
-  idEtiqueta int(11) NOT NULL,
-  Nombre varchar(45) NOT NULL
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Etiqueta`
+--
+
+CREATE TABLE `Etiqueta` (
+  `idEtiqueta` int(11) NOT NULL,
+  `Nombre` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE Movimiento (
-  idMovimiento int(11) NOT NULL,
-  Cantidad int(11) NOT NULL,
-  Momento datetime NOT NULL,
-  idProducto int(11) NOT NULL,
-  IsDesechado tinyint(4) NOT NULL DEFAULT '0'
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Movimiento`
+--
+
+CREATE TABLE `Movimiento` (
+  `idMovimiento` int(11) NOT NULL,
+  `Cantidad` int(11) NOT NULL,
+  `Momento` datetime NOT NULL,
+  `idProducto` int(11) NOT NULL,
+  `IsDesechado` tinyint(4) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE Organizacion (
-  idOrganizacion int(11) NOT NULL,
-  Nombre varchar(255) NOT NULL
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Organizacion`
+--
+
+CREATE TABLE `Organizacion` (
+  `idOrganizacion` int(11) NOT NULL,
+  `Nombre` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO Organizacion (idOrganizacion, Nombre) VALUES
+--
+-- Dumping data for table `Organizacion`
+--
+
+INSERT INTO `Organizacion` (`idOrganizacion`, `Nombre`) VALUES
 (1, 'UPMH');
 
-CREATE TABLE Producto (
-  idProducto int(11) NOT NULL,
-  Nombre varchar(45) NOT NULL,
-  Descripcion varchar(255) DEFAULT NULL,
-  Precio int(11) NOT NULL,
-  idUsuario int(11) NOT NULL,
-  Activo tinyint(4) NOT NULL,
-  Foto varchar(255) DEFAULT NULL
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Producto`
+--
+
+CREATE TABLE `Producto` (
+  `idProducto` int(11) NOT NULL,
+  `Nombre` varchar(45) NOT NULL,
+  `Descripcion` varchar(255) DEFAULT NULL,
+  `Precio` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `Activo` tinyint(4) NOT NULL,
+  `Foto` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE Producto_has_Etiqueta (
-  idProducto int(11) NOT NULL,
-  idEtiqueta int(11) NOT NULL
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Producto_has_Etiqueta`
+--
+
+CREATE TABLE `Producto_has_Etiqueta` (
+  `idProducto` int(11) NOT NULL,
+  `idEtiqueta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE Usuario (
-  idUsuario int(11) NOT NULL,
-  Nombre varchar(90) NOT NULL,
-  ApellidoP varchar(90) DEFAULT NULL,
-  ApellidoM varchar(90) DEFAULT NULL,
-  Alias varchar(45) DEFAULT NULL,
-  Celular varchar(15) NOT NULL,
-  Password varchar(255) NOT NULL,
-  Foto varchar(70) DEFAULT NULL,
-  UltimaUbicacion varchar(255) DEFAULT NULL,
-  TimeUbicacion datetime DEFAULT NULL,
-  idCampus int(11) NOT NULL
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Usuario`
+--
+
+CREATE TABLE `Usuario` (
+  `idUsuario` int(11) NOT NULL,
+  `Nombre` varchar(90) DEFAULT NULL,
+  `ApellidoP` varchar(90) DEFAULT NULL,
+  `ApellidoM` varchar(90) DEFAULT NULL,
+  `Alias` varchar(45) DEFAULT NULL,
+  `Celular` varchar(15) DEFAULT NULL,
+  `Password` varchar(255) DEFAULT NULL,
+  `Foto` varchar(70) DEFAULT NULL,
+  `UltimaUbicacion` varchar(255) DEFAULT NULL,
+  `TimeUbicacion` datetime DEFAULT NULL,
+  `idCampus` int(11) NOT NULL,
+  `fb_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE UsuarioAccesaProducto (
-  idProducto int(11) NOT NULL,
-  idUsuario int(11) NOT NULL,
-  Momento datetime NOT NULL
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `UsuarioAccesaProducto`
+--
+
+CREATE TABLE `UsuarioAccesaProducto` (
+  `idProducto` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `Momento` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE UsuarioContactaProducto (
-  idProducto int(11) NOT NULL,
-  idUsuario int(11) NOT NULL,
-  Momento datetime NOT NULL
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `UsuarioContactaProducto`
+--
+
+CREATE TABLE `UsuarioContactaProducto` (
+  `idProducto` int(11) NOT NULL,
+  `idUsuario` int(11) NOT NULL,
+  `Momento` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Indexes for dumped tables
+--
 
-ALTER TABLE Aula
-  ADD PRIMARY KEY (idAula),
-  ADD KEY fk_Aula_Edificio_idx (idEdificio);
+--
+-- Indexes for table `Aula`
+--
+ALTER TABLE `Aula`
+  ADD PRIMARY KEY (`idAula`),
+  ADD KEY `fk_Aula_Edificio_idx` (`idEdificio`);
 
-ALTER TABLE Campus
-  ADD PRIMARY KEY (idCampus),
-  ADD KEY fk_Campus_Organizacion1_idx (idOrganizacion);
+--
+-- Indexes for table `Campus`
+--
+ALTER TABLE `Campus`
+  ADD PRIMARY KEY (`idCampus`),
+  ADD KEY `fk_Campus_Organizacion1_idx` (`idOrganizacion`);
 
-ALTER TABLE Edificio
-  ADD PRIMARY KEY (idEdificio),
-  ADD KEY fk_Edificio_Campus1_idx (idCampus);
+--
+-- Indexes for table `Edificio`
+--
+ALTER TABLE `Edificio`
+  ADD PRIMARY KEY (`idEdificio`),
+  ADD KEY `fk_Edificio_Campus1_idx` (`idCampus`);
 
-ALTER TABLE Etiqueta
-  ADD PRIMARY KEY (idEtiqueta);
+--
+-- Indexes for table `Etiqueta`
+--
+ALTER TABLE `Etiqueta`
+  ADD PRIMARY KEY (`idEtiqueta`);
 
-ALTER TABLE Movimiento
-  ADD PRIMARY KEY (idMovimiento),
-  ADD KEY fk_Movimiento_Producto1_idx (idProducto);
+--
+-- Indexes for table `Movimiento`
+--
+ALTER TABLE `Movimiento`
+  ADD PRIMARY KEY (`idMovimiento`),
+  ADD KEY `fk_Movimiento_Producto1_idx` (`idProducto`);
 
-ALTER TABLE Organizacion
-  ADD PRIMARY KEY (idOrganizacion);
+--
+-- Indexes for table `Organizacion`
+--
+ALTER TABLE `Organizacion`
+  ADD PRIMARY KEY (`idOrganizacion`);
 
-ALTER TABLE Producto
-  ADD PRIMARY KEY (idProducto),
-  ADD KEY fk_Producto_Usuario1_idx (idUsuario);
+--
+-- Indexes for table `Producto`
+--
+ALTER TABLE `Producto`
+  ADD PRIMARY KEY (`idProducto`),
+  ADD KEY `fk_Producto_Usuario1_idx` (`idUsuario`);
 
-ALTER TABLE Producto_has_Etiqueta
-  ADD PRIMARY KEY (idProducto,idEtiqueta),
-  ADD KEY fk_Producto_has_Etiqueta_Etiqueta1_idx (idEtiqueta),
-  ADD KEY fk_Producto_has_Etiqueta_Producto1_idx (idProducto);
+--
+-- Indexes for table `Producto_has_Etiqueta`
+--
+ALTER TABLE `Producto_has_Etiqueta`
+  ADD PRIMARY KEY (`idProducto`,`idEtiqueta`),
+  ADD KEY `fk_Producto_has_Etiqueta_Etiqueta1_idx` (`idEtiqueta`),
+  ADD KEY `fk_Producto_has_Etiqueta_Producto1_idx` (`idProducto`);
 
-ALTER TABLE Usuario
-  ADD PRIMARY KEY (idUsuario),
-  ADD KEY fk_Usuario_Campus1_idx (idCampus);
+--
+-- Indexes for table `Usuario`
+--
+ALTER TABLE `Usuario`
+  ADD PRIMARY KEY (`idUsuario`),
+  ADD UNIQUE KEY `fb_id_unico` (`fb_id`),
+  ADD KEY `fk_Usuario_Campus1_idx` (`idCampus`);
 
-ALTER TABLE UsuarioAccesaProducto
-  ADD PRIMARY KEY (idProducto,idUsuario),
-  ADD KEY fk_Producto_has_Usuario_Usuario1_idx (idUsuario),
-  ADD KEY fk_Producto_has_Usuario_Producto1_idx (idProducto);
+--
+-- Indexes for table `UsuarioAccesaProducto`
+--
+ALTER TABLE `UsuarioAccesaProducto`
+  ADD PRIMARY KEY (`idProducto`,`idUsuario`),
+  ADD KEY `fk_Producto_has_Usuario_Usuario1_idx` (`idUsuario`),
+  ADD KEY `fk_Producto_has_Usuario_Producto1_idx` (`idProducto`);
 
-ALTER TABLE UsuarioContactaProducto
-  ADD PRIMARY KEY (idProducto,idUsuario),
-  ADD KEY fk_Producto_has_Usuario_Usuario2_idx (idUsuario),
-  ADD KEY fk_Producto_has_Usuario_Producto2_idx (idProducto);
+--
+-- Indexes for table `UsuarioContactaProducto`
+--
+ALTER TABLE `UsuarioContactaProducto`
+  ADD PRIMARY KEY (`idProducto`,`idUsuario`),
+  ADD KEY `fk_Producto_has_Usuario_Usuario2_idx` (`idUsuario`),
+  ADD KEY `fk_Producto_has_Usuario_Producto2_idx` (`idProducto`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
 
-ALTER TABLE Aula
-  MODIFY idAula int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `Aula`
+--
+ALTER TABLE `Aula`
+  MODIFY `idAula` int(11) NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE Campus
-  MODIFY idCampus int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `Campus`
+--
+ALTER TABLE `Campus`
+  MODIFY `idCampus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
-ALTER TABLE Edificio
-  MODIFY idEdificio int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `Edificio`
+--
+ALTER TABLE `Edificio`
+  MODIFY `idEdificio` int(11) NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE Etiqueta
-  MODIFY idEtiqueta int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `Etiqueta`
+--
+ALTER TABLE `Etiqueta`
+  MODIFY `idEtiqueta` int(11) NOT NULL AUTO_INCREMENT;
 
-ALTER TABLE Movimiento
-  MODIFY idMovimiento int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+--
+-- AUTO_INCREMENT for table `Movimiento`
+--
+ALTER TABLE `Movimiento`
+  MODIFY `idMovimiento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=73;
 
-ALTER TABLE Organizacion
-  MODIFY idOrganizacion int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `Organizacion`
+--
+ALTER TABLE `Organizacion`
+  MODIFY `idOrganizacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
-ALTER TABLE Producto
-  MODIFY idProducto int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+--
+-- AUTO_INCREMENT for table `Producto`
+--
+ALTER TABLE `Producto`
+  MODIFY `idProducto` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
-ALTER TABLE Usuario
-  MODIFY idUsuario int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+--
+-- AUTO_INCREMENT for table `Usuario`
+--
+ALTER TABLE `Usuario`
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
 
+--
+-- Constraints for dumped tables
+--
 
-ALTER TABLE Aula
-  ADD CONSTRAINT fk_Aula_Edificio FOREIGN KEY (idEdificio) REFERENCES Edificio (idEdificio) ON DELETE NO ACTION ON UPDATE NO ACTION;
+--
+-- Constraints for table `Aula`
+--
+ALTER TABLE `Aula`
+  ADD CONSTRAINT `fk_Aula_Edificio` FOREIGN KEY (`idEdificio`) REFERENCES `Edificio` (`idEdificio`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE Campus
-  ADD CONSTRAINT fk_Campus_Organizacion1 FOREIGN KEY (idOrganizacion) REFERENCES Organizacion (idOrganizacion) ON DELETE NO ACTION ON UPDATE NO ACTION;
+--
+-- Constraints for table `Campus`
+--
+ALTER TABLE `Campus`
+  ADD CONSTRAINT `fk_Campus_Organizacion1` FOREIGN KEY (`idOrganizacion`) REFERENCES `Organizacion` (`idOrganizacion`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE Edificio
-  ADD CONSTRAINT fk_Edificio_Campus1 FOREIGN KEY (idCampus) REFERENCES Campus (idCampus) ON DELETE NO ACTION ON UPDATE NO ACTION;
+--
+-- Constraints for table `Edificio`
+--
+ALTER TABLE `Edificio`
+  ADD CONSTRAINT `fk_Edificio_Campus1` FOREIGN KEY (`idCampus`) REFERENCES `Campus` (`idCampus`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE Movimiento
-  ADD CONSTRAINT fk_Movimiento_Producto1 FOREIGN KEY (idProducto) REFERENCES Producto (idProducto) ON DELETE NO ACTION ON UPDATE NO ACTION;
+--
+-- Constraints for table `Movimiento`
+--
+ALTER TABLE `Movimiento`
+  ADD CONSTRAINT `fk_Movimiento_Producto1` FOREIGN KEY (`idProducto`) REFERENCES `Producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE Producto
-  ADD CONSTRAINT fk_Producto_Usuario1 FOREIGN KEY (idUsuario) REFERENCES Usuario (idUsuario) ON DELETE NO ACTION ON UPDATE NO ACTION;
+--
+-- Constraints for table `Producto`
+--
+ALTER TABLE `Producto`
+  ADD CONSTRAINT `fk_Producto_Usuario1` FOREIGN KEY (`idUsuario`) REFERENCES `Usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE Producto_has_Etiqueta
-  ADD CONSTRAINT fk_Producto_has_Etiqueta_Etiqueta1 FOREIGN KEY (idEtiqueta) REFERENCES Etiqueta (idEtiqueta) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT fk_Producto_has_Etiqueta_Producto1 FOREIGN KEY (idProducto) REFERENCES Producto (idProducto) ON DELETE NO ACTION ON UPDATE NO ACTION;
+--
+-- Constraints for table `Producto_has_Etiqueta`
+--
+ALTER TABLE `Producto_has_Etiqueta`
+  ADD CONSTRAINT `fk_Producto_has_Etiqueta_Etiqueta1` FOREIGN KEY (`idEtiqueta`) REFERENCES `Etiqueta` (`idEtiqueta`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Producto_has_Etiqueta_Producto1` FOREIGN KEY (`idProducto`) REFERENCES `Producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE Usuario
-  ADD CONSTRAINT fk_Usuario_Campus1 FOREIGN KEY (idCampus) REFERENCES Campus (idCampus) ON DELETE NO ACTION ON UPDATE NO ACTION;
+--
+-- Constraints for table `Usuario`
+--
+ALTER TABLE `Usuario`
+  ADD CONSTRAINT `fk_Usuario_Campus1` FOREIGN KEY (`idCampus`) REFERENCES `Campus` (`idCampus`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE UsuarioAccesaProducto
-  ADD CONSTRAINT fk_Producto_has_Usuario_Producto1 FOREIGN KEY (idProducto) REFERENCES Producto (idProducto) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT fk_Producto_has_Usuario_Usuario1 FOREIGN KEY (idUsuario) REFERENCES Usuario (idUsuario) ON DELETE NO ACTION ON UPDATE NO ACTION;
+--
+-- Constraints for table `UsuarioAccesaProducto`
+--
+ALTER TABLE `UsuarioAccesaProducto`
+  ADD CONSTRAINT `fk_Producto_has_Usuario_Producto1` FOREIGN KEY (`idProducto`) REFERENCES `Producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Producto_has_Usuario_Usuario1` FOREIGN KEY (`idUsuario`) REFERENCES `Usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
-ALTER TABLE UsuarioContactaProducto
-  ADD CONSTRAINT fk_Producto_has_Usuario_Producto2 FOREIGN KEY (idProducto) REFERENCES Producto (idProducto) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT fk_Producto_has_Usuario_Usuario2 FOREIGN KEY (idUsuario) REFERENCES Usuario (idUsuario) ON DELETE NO ACTION ON UPDATE NO ACTION;
+--
+-- Constraints for table `UsuarioContactaProducto`
+--
+ALTER TABLE `UsuarioContactaProducto`
+  ADD CONSTRAINT `fk_Producto_has_Usuario_Producto2` FOREIGN KEY (`idProducto`) REFERENCES `Producto` (`idProducto`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Producto_has_Usuario_Usuario2` FOREIGN KEY (`idUsuario`) REFERENCES `Usuario` (`idUsuario`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

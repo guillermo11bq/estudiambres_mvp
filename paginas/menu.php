@@ -8,7 +8,7 @@ if ( isset($_GET['salir']) ) {
 }
 ?><!DOCTYPE html>
 <html>
-<head><meta http-equiv="Content-Type" content="text/html; charset=gb18030">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>Estudihambres</title>
 	<link rel="shortcut icon" href="src/img/favicon.ico" type="image/x-icon">
     <link rel="icon" href="src/img/favicon.ico" type="image/x-icon">
@@ -37,6 +37,29 @@ background: linear-gradient(0deg, rgba(238,238,238,1) 0%, rgba(255,255,255,1) 10
 }
 </style>
 <body>
+    
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '326955518144513',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v3.2'
+    });
+      
+    FB.AppEvents.logPageView();   
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
+
 	<nav class="navbar">
 		<ul>
 		   	<li><a href="index.php" class="home"><img class="logo" src="src/img/logo7.png"></a></li>

@@ -1,4 +1,12 @@
 <?
+require_once 'php-graph-sdk-5.4/src/Facebook/autoload.php';
+
+$fb = new Facebook\Facebook([
+  'app_id' => '326955518144513',
+  'app_secret' => 'da9d7a100ef5f38a6dab23d384c0e7c1',
+  'default_graph_version' => 'v2.10',
+  ]);
+
 session_start();
 if(isset($_SESSION["USER"])){
 	echo "<script>
@@ -40,7 +48,7 @@ if ( !empty($_POST['pass']) && !empty($_POST['nombre']) && !empty($_POST['patern
     $tel = $_POST['tel'];
     $alias = isset($_POST['alias']) ? $_POST['alias'] : false;
 
-    $logueo = $clienteSOAP -> registrarUsuario($nombre, $paterno, $tel, $password, 1, $materno, $alias);
+    $logueo = $clienteSOAP -> registrarUsuario($nombre, $paterno, $tel, $password, $materno, $alias);
 
     if ($logueo) {
         echo "<script>
@@ -107,6 +115,29 @@ if ( !empty($_POST['pass']) && !empty($_POST['nombre']) && !empty($_POST['patern
 </style>
 </head>
 <body>
+    <div id="fb-root"></div>
+    <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '326955518144513',
+      cookie     : true,
+      //xfbml      : true,
+      version    : 'v3.2'
+    });
+      
+    FB.AppEvents.logPageView();   
+      
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+   
+</script>
 	<div class="contenedor-form borderGray">
 		<div class="toggle">
 			<span> Crear Cuenta</span>
@@ -118,6 +149,8 @@ if ( !empty($_POST['pass']) && !empty($_POST['nombre']) && !empty($_POST['patern
 				<input type="text" name="usuario" placeholder="Telefono" required>
 				<input type="password" name="password" placeholder="Contraseña" required>
 				<input type="submit" value="Iniciar Sesión">
+				
+				<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="login_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false" ></div>
 			</form>
 		</div>
 		
@@ -133,13 +166,4 @@ if ( !empty($_POST['pass']) && !empty($_POST['nombre']) && !empty($_POST['patern
 				<input type="number" min="1000000000" max="9999999999" name="tel" placeholder="Teléfono a 10 digitos" required>
 						
 				<input type="submit" value="Registrarse">
-			</form>
-		</div>
-		<div class="reset-password inputForgot">
-			<a href="#">¡Bienvenido!</a>
-		</div>
-	</div>
-	<script src="src/js/jquery-3.1.1.min.js"></script>    
-	<script src="src/js/main.js"></script>
-</body>
-</html>
+		
